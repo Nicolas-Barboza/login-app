@@ -1,0 +1,235 @@
+html, body, #root {
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #f0f2f5; 
+}
+
+.login-card-container {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: 100vh !important;
+  width: 100% !important;
+  background-color: #f0f2f5; 
+  padding: 20px !important;
+  box-sizing: border-box !important;
+}
+
+.login-signup-card {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-width: 900px;
+  width: 100%;
+  background-color: #fff; 
+  height: auto;
+  min-height: 450px;
+}
+
+/* Panel del formulario (lado izquierdo) */
+.form-panel {
+  flex: 1; 
+  min-width: 300px; 
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
+  text-align: center; 
+}
+
+.form-panel h2 {
+  color: #333;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+/* Panel de bienvenida (lado derecho) */
+.welcome-panel {
+  flex: 1; 
+  min-width: 300px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: white;
+  background: linear-gradient(135deg, #8A2BE2, #9932CC); 
+  text-align: center;
+}
+
+.welcome-panel h3 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.welcome-panel p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.welcome-panel .btn {
+  background-color: rgba(255, 255, 255, 0.2); 
+  border: 1px solid rgba(255, 255, 255, 0.5); 
+  color: white;
+  padding: 10px 25px;
+  border-radius: 50px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.welcome-panel .btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-color: white;
+}
+
+/* Estilo para los grupos de formulario con icono */
+.input-icon-group {
+  position: relative;
+  width: 100%;
+  max-width: 300px; 
+  margin-bottom: 20px;
+}
+
+.input-icon-group .form-control {
+  padding-left: 45px;
+  border-radius: 50px;
+  height: 50px;
+  background-color: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  box-shadow: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-icon-group .form-control:focus {
+  border-color: #8A2BE2;
+  box-shadow: 0 0 0 0.25rem rgba(138, 43, 226, 0.25);
+  background-color: #fff;
+}
+
+.input-icon-group .input-group-text {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  z-index: 10;
+  color: #888;
+}
+
+/* Checkbox de términos y condiciones */
+.form-check {
+  margin-top: 15px;
+  margin-bottom: 25px;
+  width: 100%; 
+  max-width: 300px; 
+  text-align: left; 
+}
+
+.form-check-input {
+  border-radius: 5px !important;
+  border: 1px solid #ccc;
+  float: left; 
+  margin-right: 8px;
+  margin-top: 5px; 
+}
+
+/* Botones de acción */
+.action-btn {
+  background: linear-gradient(45deg, #8A2BE2, #9932CC);
+  border: none;
+  padding: 12px 0;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: white;
+  max-width: 300px; 
+  width: 100%;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(138, 43, 226, 0.3);
+  background: linear-gradient(45deg, #9932CC, #8A2BE2);
+}
+
+.secondary-action-btn {
+  background: none;
+  border: 1px solid #8A2BE2;
+  color: #8A2BE2;
+  padding: 10px 0;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  max-width: 300px; 
+  width: 100%;
+}
+
+.secondary-action-btn:hover {
+  background-color: #8A2BE2;
+  color: white;
+}
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media (max-width: 768px) {
+  .login-signup-card {
+    flex-direction: column; /* Apila los paneles verticalmente en móviles */
+    max-width: 400px; /* Ancho máximo para la tarjeta apilada */
+    min-height: unset; /* Permite que la altura se ajuste al contenido */
+  }
+  .form-panel, .welcome-panel {
+    padding: 2rem; /* Reduce el padding en pantallas pequeñas */
+    min-width: unset; /* Reinicia el min-width en móviles */
+    width: 100%; /* Asegura que ocupen el 100% del ancho disponible de la tarjeta */
+  }
+  .welcome-panel {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+  .form-panel h2 {
+    font-size: 1.8rem; /* Ajusta el tamaño del título */
+  }
+  .welcome-panel h3 {
+    font-size: 1.8rem;
+  }
+  .welcome-panel p {
+    font-size: 0.9rem;
+  }
+  .form-check {
+    margin-bottom: 1.5rem; /* Ajusta el margen inferior */
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media (min-width: 769px) and (max-width: 992px) {
+  .login-signup-card {
+    max-width: 700px; /* Un poco más pequeña que la versión de escritorio */
+  }
+  .form-panel, .welcome-panel {
+    padding: 2rem;
+  }
+  .form-panel h2 {
+    font-size: 2rem;
+  }
+  .welcome-panel h3 {
+    font-size: 2rem;
+  }
+}
+
+/* Asegurar que el Card.Body no tenga padding extra si lo hay */
+.card-body {
+  padding: 0 !important; 
+}
