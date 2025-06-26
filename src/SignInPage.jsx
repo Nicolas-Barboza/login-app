@@ -12,21 +12,25 @@ function SignInPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const handleSignIn = (event) => {
+  // ----- CAMBIO AQUÍ: handleSignIn ahora es async -----
+  const handleSignIn = async (event) => {
     event.preventDefault();
 
-    setError('');
+    setError(''); // Limpia errores previos
 
     if (!username || !password) {
       setError('Por favor, ingresa tu usuario y contraseña.');
       return;
     }
 
-    const success = login(username, password);
+    // ----- CAMBIO AQUÍ: Await la función login -----
+    const success = await login(username, password);
     if (success) {
       navigate('/dashboard'); // Redirige al dashboard si el login es exitoso
     } else {
-      setError('Usuario o contraseña incorrectos.');
+      // El error ya lo maneja AuthContext y lo envía por consola,
+      // pero aquí puedes mostrar un mensaje genérico o más específico si el backend lo devuelve.
+      setError('Usuario o contraseña incorrectos.'); // Mensaje de error para el usuario
     }
   };
 
@@ -63,14 +67,14 @@ function SignInPage() {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" className="w-100 action-btn mb-3"> 
+            <Button variant="primary" type="submit" className="w-100 action-btn mb-3">
               INGRESAR
             </Button>
 
             <Button
               variant="outline-primary"
               onClick={handleCreateAccountClick}
-              className="w-100 secondary-action-btn" 
+              className="w-100 secondary-action-btn"
             >
               CREAR CUENTA
             </Button>

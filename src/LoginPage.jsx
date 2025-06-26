@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+// import { useAuth } from './AuthContext'; // Ya no se usa 'login' aquí, solo la navegación
 import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
 import './LoginSignupCard.css';
 
@@ -11,12 +11,14 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState(''); // Nuevo estado para mensaje de éxito
   const navigate = useNavigate();
-  const { login } = useAuth(); // Usamos login para simular el registro
+  // const { login } = useAuth(); // No necesitamos el login aquí para el registro
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => { // ¡CAMBIADO A ASYNC!
     event.preventDefault();
     setError('');
+    setSuccessMessage(''); // Limpiar mensajes previos
 
     if (!username || !email || !password || !agreeTerms) {
       setError('Por favor, completa todos los campos y acepta los términos.');
@@ -26,18 +28,34 @@ function LoginPage() {
       setError('Por favor, ingresa un email válido.');
       return;
     }
-    if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.');
+    if (password.length < 3) { // MySQL no tiene hash, asi que no hay un minimo real, pero es buena práctica
+      setError('La contraseña debe tener al menos 3 caracteres.');
       return;
     }
 
-    // Aquí, en un escenario real, harías una llamada a tu API para registrar el usuario.
-    // Por simplicidad, simulamos un login exitoso después de un "registro" válido.
-    const registrationSuccess = login(username, password); // Simula que el registro te loguea automáticamente
-    if (registrationSuccess) {
-      navigate('/dashboard'); // Redirige al dashboard
-    } else {
-      setError('Hubo un problema al crear la cuenta. Intenta de nuevo.');
+    try {
+      const response = await fetch('http://localhost:9090/api/register.php', { // <-- URL de tu API PHP para REGISTRO
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setSuccessMessage(data.message); // Muestra mensaje de éxito
+        // Puedes redirigir a la página de login después de un registro exitoso
+        setTimeout(() => {
+            navigate('/');
+        }, 2000); // Redirige después de 2 segundos para que el usuario vea el mensaje
+      } else {
+        setError(data.message || 'Hubo un problema al crear la cuenta. Intenta de nuevo.');
+      }
+    } catch (error) {
+      console.error('Error de red o al conectar con la API PHP para registro:', error);
+      setError('No se pudo conectar con el servidor. Intenta de nuevo más tarde.');
     }
   };
 
@@ -51,6 +69,7 @@ function LoginPage() {
         <div className="form-panel">
           <h2 className="mb-4">Crear nueva cuenta</h2>
           {error && <Alert variant="danger" className="text-center">{error}</Alert>}
+          {successMessage && <Alert variant="success" className="text-center">{successMessage}</Alert>} {/* Muestra mensaje de éxito */}
 
           <Form onSubmit={handleSubmit} className="w-100">
             <Form.Group className="input-icon-group">
@@ -83,11 +102,11 @@ function LoginPage() {
           </Form>
         </div>
         <div className="welcome-panel">
-          <h3>¡Únete a nuestra comunidad!</h3> 
+          <h3>¡Únete a nuestra comunidad!</h3>
           <p>
             Regístrate para descubrir un mundo de posibilidades, conectar con otros usuarios y acceder a contenido exclusivo.
           </p>
-          <Button variant="outline-light" onClick={handleSignInClick}> 
+          <Button variant="outline-light" onClick={handleSignInClick}>
             ¿Ya tienes cuenta? Inicia Sesión
           </Button>
         </div>
